@@ -115,6 +115,22 @@ Example values imported from *executed original Python methods*:
 | Right-sweep, `n=10`, `x=0.5` | `y≈0.6674997738352978` |
 | Matrix multiplication `[[1,2],[3,4]]·[[2,0],[1,2]]` | `[[4,4],[10,8]]` |
 
+### Reproducible visual experiments
+
+These are **actual SVG files produced by the C# reporting CLI** during a successful GitHub Actions run (not mockups). The reference curve is turquoise; the numerical approximation is orange.
+
+| Polynomial interpolation — Runge function, degree 15 | Trigonometric interpolation — `3cos(15t)`, degree 7 |
+| :---: | :---: |
+| ![Runge effect, 15-degree Lagrange interpolation](docs/images/runge-n15-lagrange.svg) | ![Aliasing with seven harmonics](docs/images/trig-alias-n7.svg) |
+| High-degree interpolation using equidistant nodes amplifies the endpoint error. | `2n+1=15` samples alias a 15th harmonic to a constant. |
+
+| Same Runge nodes — Newton form | Trigonometric reconstruction — `3cos(15t)`, degree 15 |
+| :---: | :---: |
+| ![Runge polynomial evaluated with Newton divided differences](docs/images/runge-n15-newton.svg) | ![Fifteenth harmonic reconstructed with 15 harmonics](docs/images/trig-cos15-n15.svg) |
+| Algebraically the same interpolating polynomial; roundoff may differ. | The harmonic is in the approximation basis and is reproduced to floating-point accuracy. |
+
+You can recreate these plots, CSV data, and interactive HTML report using the commands in [Quick start](#quick-start). The graphs use the separate **1001-point evaluation grid** instead of reusing the interpolation nodes.
+
 ## Tests and precision
 
 Tests use **xUnit** and include parameterized mathematical invariants, interpolation at input nodes, trigonometric basis-coefficient checks, periodicity, singular matrices, zero denominators, nonfinite inputs, boundaries, report generation, and **golden-number comparisons with the actual Python source**.
