@@ -1,0 +1,4 @@
+# shape dimensions in invariant dot-decimal notation
+circle 2
+rectangle 3 4
+square 5

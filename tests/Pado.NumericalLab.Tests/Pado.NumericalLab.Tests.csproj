@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><IsTestProject>true</IsTestProject><IsPackable>false</IsPackable></PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.0.2" />
+    <PackageReference Include="coverlet.collector" Version="6.0.4" />
+    <ProjectReference Include="../../src/Pado.NumericalLab.Core/Pado.NumericalLab.Core.csproj" />
+    <ProjectReference Include="../../src/Pado.NumericalLab.Cli/Pado.NumericalLab.Cli.csproj" />
+  </ItemGroup>
+  <ItemGroup><None Include="../../docs/reference/python-golden.json" Link="python-golden.json" CopyToOutputDirectory="PreserveNewest" /></ItemGroup>
+</Project>

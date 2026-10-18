@@ -1,0 +1,43 @@
+name: .NET 10 CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Restore
+        run: dotnet restore PADO.NumericalLab.sln
+      - name: Build (Release)
+        run: dotnet build PADO.NumericalLab.sln -c Release --no-restore
+      - name: Unit tests and coverage
+        run: dotnet test PADO.NumericalLab.sln -c Release --no-build --collect:"XPlat Code Coverage" --logger "trx;LogFileName=test-results.trx"
+      - name: Interpolation CLI smoke test (CSV, SVG, HTML)
+        run: |
+          dotnet run --project src/Pado.NumericalLab.Cli -c Release --no-build -- interpolate --n 5,10,15 --grid 1001 --out ./artifacts/polynomial
+          dotnet run --project src/Pado.NumericalLab.Cli -c Release --no-build -- trig --n 1,7,15 --grid 1001 --out ./artifacts/trig
+          test -f ./artifacts/polynomial/report.html
+          test -f ./artifacts/trig/report.html
+          dotnet run --project src/Pado.NumericalLab.Cli -c Release --no-build -- stats
+          dotnet run --project src/Pado.NumericalLab.Cli -c Release --no-build -- algebra
+          dotnet run --project src/Pado.NumericalLab.Cli -c Release --no-build -- shapes samples/shapes.txt
+          dotnet run --project src/Pado.NumericalLab.Cli -c Release --no-build -- calc 2 pow 3
+      - name: Upload numerical reports and tests
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: numerical-lab-ci-artifacts
+          path: |
+            artifacts/
+            **/TestResults/
+          if-no-files-found: ignore
