@@ -9,8 +9,8 @@ Actual input archives were inspected directly (not inferred from their names). I
 | `InterpolationLab_CSharp(2).zip` | `InterpolationLab_CSharp/Interpolation.cs` | `0994fb5a9e544b3c` | `Core` |
 | `InterpolationLab_CSharp(2).zip` | `InterpolationLab_CSharp/ManualMath.cs` | `a11ecfbbcdd6b894` | `Core` |
 | `InterpolationLab_CSharp(2).zip` | `InterpolationLab_CSharp/Program.cs` | `3cc4a8a6bc67ce0e` | `Core` |
-| `InterpolationLab_CSharp(2).zip` | `InterpolationLab_CSharp/SvgGraph.cs` | `70dbcc8a124e4cd7` | `Core` |
-| `InterpolationLab_CSharp(2).zip` | `InterpolationLab_CSharp/ReportWriter.cs` | `d93ffced58298623` | `Core` |
+| `InterpolationLab_CSharp(2).zip` | `InterpolationLab_CSharp/SvgGraph.cs` | `70dbcc8a124e4cd7` | `Cli.Reporting` |
+| `InterpolationLab_CSharp(2).zip` | `InterpolationLab_CSharp/ReportWriter.cs` | `d93ffced58298623` | `Cli.Reporting` |
 | `TrigInterpolationManual(1).zip` | `TrigInterpolationManual/TrigonometricInterpolator.cs` | `3a61c003071a9a22` | `Core` |
 | `TrigInterpolationManual(1).zip` | `TrigInterpolationManual/ManualMath.cs` | `8269340e585fefea` | `Core` |
 | `TrigInterpolationManual(1).zip` | `TrigInterpolationManual/SelfTests.cs` | `ca9eb7c721d69900` | `Core` |

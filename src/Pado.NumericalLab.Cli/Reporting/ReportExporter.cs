@@ -30,6 +30,11 @@ public static class ReportExporter
         double X(double v) => left + (v - x0) / (x1 - x0) * (width - left - right);
         double Y(double v) => height - bottom - (v - y0) / (y1 - y0) * (height - top - bottom);
         string F(double v) => v.ToString("F3", CultureInfo.InvariantCulture);
+        string Axis(double v)
+        {
+            string plain = v.ToString("G4", CultureInfo.InvariantCulture);
+            return plain.Length > 10 ? v.ToString("0.##E+0", CultureInfo.InvariantCulture) : plain;
+        }
         var sb = new StringBuilder();
         sb.Append($"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 {width} {height}\" role=\"img\" aria-label=\"{WebUtility.HtmlEncode(title)}\">\n");
         sb.Append("<rect width=\"100%\" height=\"100%\" fill=\"#0b1221\"/>");
@@ -39,7 +44,14 @@ public static class ReportExporter
             double y = top + (height - top - bottom) * tick / 5.0;
             sb.Append($"<line x1=\"{left}\" y1=\"{F(y)}\" x2=\"{width - right}\" y2=\"{F(y)}\" stroke=\"#263851\"/>");
             double label = y1 - (y1 - y0) * tick / 5.0;
-            sb.Append($"<text x=\"{left - 8}\" y=\"{F(y + 4)}\" text-anchor=\"end\" font-size=\"12\" fill=\"#aebed6\">{Number(label)}</text>");
+            sb.Append($"<text x=\"{left - 8}\" y=\"{F(y + 4)}\" text-anchor=\"end\" font-size=\"12\" fill=\"#aebed6\">{Axis(label)}</text>");
+        }
+        for (int tick = 0; tick <= 5; tick++)
+        {
+            double x = left + (width - left - right) * tick / 5.0;
+            double label = x0 + (x1 - x0) * tick / 5.0;
+            sb.Append($"<line x1=\"{F(x)}\" y1=\"{top}\" x2=\"{F(x)}\" y2=\"{height - bottom}\" stroke=\"#1b2c41\"/>");
+            sb.Append($"<text x=\"{F(x)}\" y=\"{height - bottom + 24}\" text-anchor=\"middle\" font-size=\"12\" fill=\"#aebed6\">{Axis(label)}</text>");
         }
         foreach (var (data, color) in new[] { (curve.Exact, "#50d5bb"), (curve.Approximated, "#f3a855") })
         {
@@ -47,8 +59,10 @@ public static class ReportExporter
             for (int i = 0; i < curve.X.Length; i++) sb.Append(F(X(curve.X[i]))).Append(',').Append(F(Y(data[i]))).Append(' ');
             sb.Append("\"/>");
         }
-        sb.Append($"<text x=\"{left}\" y=\"{height - 22}\" fill=\"#50d5bb\" font-family=\"Arial\">━━ Reference</text>");
-        sb.Append($"<text x=\"{left + 180}\" y=\"{height - 22}\" fill=\"#f3a855\" font-family=\"Arial\">━━ Approximation</text>");
+        sb.Append($"<line x1=\"{left}\" y1=\"{height - 23}\" x2=\"{left + 38}\" y2=\"{height - 23}\" stroke=\"#50d5bb\" stroke-width=\"3\"/>");
+        sb.Append($"<text x=\"{left + 45}\" y=\"{height - 18}\" fill=\"#50d5bb\" font-family=\"Arial\">Reference</text>");
+        sb.Append($"<line x1=\"{left + 180}\" y1=\"{height - 23}\" x2=\"{left + 218}\" y2=\"{height - 23}\" stroke=\"#f3a855\" stroke-width=\"3\"/>");
+        sb.Append($"<text x=\"{left + 225}\" y=\"{height - 18}\" fill=\"#f3a855\" font-family=\"Arial\">Approximation</text>");
         sb.Append("</svg>");
         File.WriteAllText(path, sb.ToString(), new UTF8Encoding(false));
     }

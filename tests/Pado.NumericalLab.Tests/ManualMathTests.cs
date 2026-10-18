@@ -39,6 +39,17 @@ public class ManualMathTests
     public void LogarithmMatchesStandardReference(double x) =>
         Assert.InRange(Math.Abs(ManualMath.NaturalLog(x) - Math.Log(x)), 0, 1e-12);
     [Fact]
+    public void PythagoreanIdentityAcrossOriginal2001Samples()
+    {
+        for (int i = 0; i <= 2000; i++)
+        {
+            double x = -Math.PI + 2 * Math.PI * i / 2000;
+            double sine = ManualMath.Sin(x), cosine = ManualMath.Cos(x);
+            Assert.InRange(Math.Abs(sine * sine + cosine * cosine - 1), 0, 1e-12);
+        }
+    }
+
+    [Fact]
     public void TrigonometricPeriodicity()
     {
         for (int i = -200; i <= 200; i++)

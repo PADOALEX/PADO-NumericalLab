@@ -30,7 +30,7 @@ Absolute error is `|f(t)−p(t)|`; reported max is over `--grid` samples, never 
 
 ## Original self-test controls
 
-From `TrigInterpolationManual/SelfTests.cs`: trigonometric special values, exp at `-2,-1,0,1,2`, Pythagorean identity, 2001 periodicity samples, Fourier coefficients `a0=4`, `a3=1.5`, `b2=-.75`, `n=7` alias, degrees `1,3,7,14,15,30,100`, null/nonfinite cases and both ends of `[0,2π]`. These were ported into **independent xUnit assertions** with explicit tolerances. Report CSV files contain original computed errors rather than forcing them to zero when within tolerance.
+From `TrigInterpolationManual/SelfTests.cs`: trigonometric special values, exp at `-2,-1,0,1,2`, Pythagorean identity, 2001 Pythagorean identity samples, Fourier coefficients `a0=4`, `a3=1.5`, `b2=-.75`, `n=7` alias, degrees `1,3,7,14,15,30,100`, null/nonfinite cases and both ends of `[0,2π]`. These were ported into **independent xUnit assertions** with explicit tolerances. Report CSV files contain original computed errors rather than forcing them to zero when within tolerance.
 
 ## Reproducibility
 

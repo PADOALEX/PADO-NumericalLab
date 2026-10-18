@@ -44,6 +44,8 @@ public class BoundaryAndReportingTests
         Assert.Equal(4, result.Frequencies.Sum());
         Assert.Equal(2, result.Frequencies[0]);
         Assert.Equal(2, result.Frequencies[1]);
+        var constant = DescriptiveStatistics.GroupedCounts(new double[] { 3, 3, 3 }, 5);
+        Assert.Equal(3, constant.Frequencies[0]);
     }
     [Fact]
     public void CalculatorAndShapesRemainIndependentDemonstrations()

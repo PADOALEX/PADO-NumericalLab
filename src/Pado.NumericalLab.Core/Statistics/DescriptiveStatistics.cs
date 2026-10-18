@@ -64,7 +64,7 @@ public static class DescriptiveStatistics
         var counts = new int[k];
         foreach (double v in data)
         {
-            int index = v == max ? k - 1 : (int)((v - min) / width);
+            int index = min == max ? 0 : v == max ? k - 1 : (int)((v - min) / width);
             counts[Math.Clamp(index, 0, k - 1)]++;
         }
         return (boundaries, counts);
