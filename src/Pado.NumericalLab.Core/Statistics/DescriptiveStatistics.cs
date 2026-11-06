@@ -57,10 +57,16 @@ public static class DescriptiveStatistics
         if (k < 1 || k > 10_000) throw new ArgumentOutOfRangeException(nameof(bins));
         double min = data.Min(), max = data.Max();
         double width = (max - min) / k;
+        if (width == 0 && min != max) throw new ArithmeticException("Bin width is below floating-point precision.");
         if (width == 0) width = 1;
         if (!double.IsFinite(width)) throw new ArithmeticException("Unrepresentable grouping range.");
         var boundaries = new double[k + 1];
-        for (int i = 0; i <= k; i++) boundaries[i] = min + i * width;
+        for (int i = 0; i <= k; i++)
+        {
+            boundaries[i] = min + i * width;
+            if (!double.IsFinite(boundaries[i]) || i > 0 && boundaries[i] <= boundaries[i - 1])
+                throw new ArithmeticException("Bin boundaries cannot be represented distinctly.");
+        }
         var counts = new int[k];
         foreach (double v in data)
         {

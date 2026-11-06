@@ -48,6 +48,12 @@ public class BoundaryAndReportingTests
         Assert.Equal(3, constant.Frequencies[0]);
     }
     [Fact]
+    public void GroupingRejectsUnrepresentableBinWidthsAndBoundaries()
+    {
+        Assert.Throws<ArithmeticException>(() => DescriptiveStatistics.GroupedCounts(new[] { 0.0, double.Epsilon }, 2));
+        Assert.Throws<ArithmeticException>(() => DescriptiveStatistics.GroupedCounts(new[] { double.MaxValue, double.MaxValue }, 5));
+    }
+    [Fact]
     public void CalculatorAndShapesRemainIndependentDemonstrations()
     {
         Assert.Equal(8, Calculator.Calculate(2, "^", 3));
