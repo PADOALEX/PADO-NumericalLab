@@ -34,4 +34,6 @@ From `TrigInterpolationManual/SelfTests.cs`: trigonometric special values, exp a
 
 ## Reproducibility
 
+Grouped statistics require strictly increasing, finite bin boundaries. Subnormal ranges whose width rounds to zero, or constant values too large to form distinct boundaries, raise `ArithmeticException` rather than returning misleading bins.
+
 The frozen JSON fixture is checked into version control. Run `dotnet test PADO.NumericalLab.sln -c Release`. The CI workflow also builds and runs the CLI, checks for reports, and exposes report artifacts; end-user generated `results/`, `bin/`, `obj/`, environments and caches are excluded from the repo.
